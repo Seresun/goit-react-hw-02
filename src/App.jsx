@@ -14,6 +14,10 @@ function App() {
     }));
   };
 
+  const resetFeedback = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
+
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
   const positiveFeedbackPercentage = totalFeedback > 0
     ? Math.round((feedback.good / totalFeedback) * 100)
@@ -32,15 +36,13 @@ function App() {
 
   return (
     <div>
-      <Description /> {/* Используем компонент Description */}
-      <Options updateFeedback={updateFeedback} />
+      <Description />
+      <Options updateFeedback={updateFeedback} resetFeedback={resetFeedback} totalFeedback={totalFeedback} />
       {totalFeedback > 0 ? (
         <Feedback
-          good={feedback.good}
-          neutral={feedback.neutral}
-          bad={feedback.bad}
-          totalFeedback={totalFeedback}
-          positiveFeedbackPercentage={positiveFeedbackPercentage}
+          feedback={feedback}
+          total={totalFeedback}
+          positivePercentage={positiveFeedbackPercentage}
         />
       ) : (
         <Notification message="No feedback yet" />
